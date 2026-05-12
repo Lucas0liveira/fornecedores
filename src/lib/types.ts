@@ -34,3 +34,20 @@ export interface CartState {
   supplierId: string | null;
   items: Record<number, CartItem>;
 }
+
+export interface Profile {
+  id: string;
+  name: string;
+  role: "teacher" | "student";
+  created_at?: string;
+}
+
+export interface ActivityLog {
+  id: number;
+  user_id: string;
+  user_name: string;
+  action: string;
+  entity_type: string;
+  entity_name: string;
+  created_at: string;
+}

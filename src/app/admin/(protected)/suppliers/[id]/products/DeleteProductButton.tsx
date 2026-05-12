@@ -25,6 +25,18 @@ export function DeleteProductButton({
       alert("Erro ao excluir: " + error.message);
       return;
     }
+
+    const { data: { user } } = await supabase.auth.getUser();
+    if (user) {
+      await supabase.from("activity_log").insert({
+        user_id: user.id,
+        user_name: user.user_metadata?.name ?? user.email ?? "Usuário",
+        action: "excluiu",
+        entity_type: "produto",
+        entity_name: productName,
+      });
+    }
+
     router.refresh();
   };
 

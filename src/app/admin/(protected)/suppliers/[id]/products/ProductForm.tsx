@@ -67,11 +67,24 @@ export function ProductForm({ supplierId, product }: Props) {
       ? await supabase.from("products").update(payload).eq("id", product!.id)
       : await supabase.from("products").insert(payload);
 
-    setLoading(false);
     if (dbError) {
+      setLoading(false);
       setError(dbError.message);
       return;
     }
+
+    const { data: { user } } = await supabase.auth.getUser();
+    if (user) {
+      await supabase.from("activity_log").insert({
+        user_id: user.id,
+        user_name: user.user_metadata?.name ?? user.email ?? "Usuário",
+        action: isEdit ? "atualizou" : "criou",
+        entity_type: "produto",
+        entity_name: payload.name,
+      });
+    }
+
+    setLoading(false);
     router.push(`/admin/suppliers/${supplierId}/products`);
     router.refresh();
   };

@@ -15,6 +15,14 @@ export default async function ProtectedAdminLayout({
 
   if (!user) redirect("/admin/login");
 
+  const { data: profile } = await supabase
+    .from("profiles")
+    .select("name, role")
+    .eq("id", user.id)
+    .single();
+
+  const isTeacher = profile?.role === "teacher";
+
   return (
     <div className="admin-shell">
       <header className="admin-topbar">
@@ -26,6 +34,8 @@ export default async function ProtectedAdminLayout({
         </Link>
         <nav className="admin-nav">
           <Link href="/admin/suppliers">Fornecedores</Link>
+          {isTeacher && <Link href="/admin/students">Alunos</Link>}
+          {isTeacher && <Link href="/admin/activity">Atividade</Link>}
           <Link href="/" target="_blank">
             ↗ Site
           </Link>

@@ -68,11 +68,24 @@ export function SupplierForm({ supplier }: Props) {
       ? await supabase.from("suppliers").update(payload).eq("id", supplier!.id)
       : await supabase.from("suppliers").insert(payload);
 
-    setLoading(false);
     if (dbError) {
+      setLoading(false);
       setError(dbError.message);
       return;
     }
+
+    const { data: { user } } = await supabase.auth.getUser();
+    if (user) {
+      await supabase.from("activity_log").insert({
+        user_id: user.id,
+        user_name: user.user_metadata?.name ?? user.email ?? "Usuário",
+        action: isEdit ? "atualizou" : "criou",
+        entity_type: "fornecedor",
+        entity_name: payload.name,
+      });
+    }
+
+    setLoading(false);
     router.push("/admin/suppliers");
     router.refresh();
   };
