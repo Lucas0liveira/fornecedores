@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { requireTeacher } from "@/lib/requireTeacher";
 import { createClient } from "@/lib/supabase/server";
 import { AddStudentForm } from "./AddStudentForm";
@@ -17,6 +18,27 @@ export default async function StudentsPage() {
     <>
       <div className="admin-hd">
         <h1>Alunos</h1>
+        <Link href="/admin/suppliers" className="btn btn-ghost">
+          Ir para Fornecedores →
+        </Link>
+      </div>
+
+      <div
+        style={{
+          background: "var(--card)",
+          border: "var(--hairline) solid var(--border)",
+          padding: "14px 18px",
+          marginBottom: 24,
+          fontSize: 13,
+          color: "var(--muted)",
+          fontFamily: "var(--font-mono)",
+        }}
+      >
+        Os alunos acessam o CRUD em{" "}
+        <Link href="/admin/suppliers" style={{ color: "var(--primary)", fontWeight: 600 }}>
+          /admin/suppliers
+        </Link>{" "}
+        após fazer login com as credenciais abaixo.
       </div>
 
       <AddStudentForm />
