@@ -17,8 +17,8 @@
   --good: #2a5e2a;
   --warn: #b4321a;
 
-  --font-sans: "DM Sans", system-ui, sans-serif;
-  --font-display: "Instrument Serif", Georgia, serif;
+  --font-sans: "Plus Jakarta Sans", system-ui, sans-serif;
+  --font-display: "Plus Jakarta Sans", system-ui, sans-serif;
   --font-mono: "JetBrains Mono", monospace;
 
   --fs-body: 15px;
@@ -193,7 +193,7 @@ img {
 .home-hero h1 {
   font-family: var(--font-display);
   font-size: var(--fs-h1);
-  font-weight: 400;
+  font-weight: 800;
   line-height: 1.05;
   letter-spacing: -0.03em;
   max-width: 700px;
@@ -289,7 +289,7 @@ img {
 .supplier-card .body h3 {
   font-family: var(--font-display);
   font-size: 20px;
-  font-weight: 400;
+  font-weight: 700;
   line-height: 1.2;
 }
 
@@ -359,7 +359,7 @@ img {
 .supplier-banner h1 {
   font-family: var(--font-display);
   font-size: clamp(28px, 4vw, 40px);
-  font-weight: 400;
+  font-weight: 800;
   line-height: 1.1;
   letter-spacing: -0.02em;
   margin: 8px 0 4px;
@@ -539,7 +539,7 @@ img {
 .prod-card .price {
   font-family: var(--font-display);
   font-size: 22px;
-  font-weight: 400;
+  font-weight: 700;
   line-height: 1;
 }
 
@@ -785,7 +785,7 @@ img {
 .cart-row .line-total {
   font-family: var(--font-display);
   font-size: 18px;
-  font-weight: 400;
+  font-weight: 700;
   text-align: right;
 }
 
@@ -812,7 +812,7 @@ img {
 .summary h3 {
   font-family: var(--font-display);
   font-size: 18px;
-  font-weight: 400;
+  font-weight: 700;
   margin-bottom: 16px;
 }
 
@@ -853,7 +853,7 @@ img {
 .empty-state h2 {
   font-family: var(--font-display);
   font-size: var(--fs-h2);
-  font-weight: 400;
+  font-weight: 700;
   color: var(--text);
 }
 
@@ -997,7 +997,7 @@ img {
 .sent-page h1 {
   font-family: var(--font-display);
   font-size: var(--fs-h2);
-  font-weight: 400;
+  font-weight: 700;
 }
 
 .sent-page p {
@@ -1075,7 +1075,7 @@ img {
 .admin-hd h1 {
   font-family: var(--font-display);
   font-size: 28px;
-  font-weight: 400;
+  font-weight: 700;
 }
 
 .admin-table {
@@ -1206,7 +1206,7 @@ img {
 .login-box h1 {
   font-family: var(--font-display);
   font-size: 26px;
-  font-weight: 400;
+  font-weight: 700;
   margin-bottom: 6px;
 }
 

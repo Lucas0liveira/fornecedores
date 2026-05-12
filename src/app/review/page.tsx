@@ -115,7 +115,7 @@ export default function ReviewPage() {
               style={{
                 fontFamily: "var(--font-display)",
                 fontSize: "clamp(26px, 4vw, 40px)",
-                fontWeight: 400,
+                fontWeight: 800,
                 letterSpacing: "-0.02em",
                 margin: "14px 0 8px",
               }}
@@ -144,7 +144,7 @@ export default function ReviewPage() {
                   <div
                     style={{
                       fontFamily: "var(--font-display)",
-                      fontWeight: 400,
+                      fontWeight: 700,
                       fontSize: 22,
                       marginTop: 6,
                     }}
@@ -175,7 +175,7 @@ export default function ReviewPage() {
                     style={{
                       fontFamily: "var(--font-display)",
                       fontSize: 28,
-                      fontWeight: 400,
+                      fontWeight: 800,
                     }}
                   >
                     {fmt(subtotal)}

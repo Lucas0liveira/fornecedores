@@ -1,18 +1,11 @@
 import type { Metadata } from "next";
-import { DM_Sans, Instrument_Serif, JetBrains_Mono } from "next/font/google";
+import { Plus_Jakarta_Sans, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 
-const dmSans = DM_Sans({
+const plusJakartaSans = Plus_Jakarta_Sans({
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-  variable: "--dm-sans",
-});
-
-const instrumentSerif = Instrument_Serif({
-  subsets: ["latin"],
-  weight: ["400"],
-  style: ["normal", "italic"],
-  variable: "--instrument-serif",
+  weight: ["300", "400", "500", "600", "700", "800"],
+  variable: "--plus-jakarta-sans",
 });
 
 const jetbrainsMono = JetBrains_Mono({
@@ -33,11 +26,11 @@ export default function RootLayout({
   return (
     <html
       lang="pt-BR"
-      className={`${dmSans.variable} ${instrumentSerif.variable} ${jetbrainsMono.variable}`}
+      className={`${plusJakartaSans.variable} ${jetbrainsMono.variable}`}
       style={
         {
-          "--font-sans": "var(--dm-sans), system-ui, sans-serif",
-          "--font-display": "var(--instrument-serif), Georgia, serif",
+          "--font-sans": "var(--plus-jakarta-sans), system-ui, sans-serif",
+          "--font-display": "var(--plus-jakarta-sans), system-ui, sans-serif",
           "--font-mono": "var(--jetbrains-mono), monospace",
         } as React.CSSProperties
       }

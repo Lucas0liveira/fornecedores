@@ -74,7 +74,7 @@ export default async function AdminDashboard() {
               style={{
                 fontFamily: "var(--font-display)",
                 fontSize: 40,
-                fontWeight: 400,
+                fontWeight: 800,
                 lineHeight: 1,
                 marginBottom: 16,
               }}
