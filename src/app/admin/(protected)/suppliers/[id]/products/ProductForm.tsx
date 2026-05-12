@@ -162,22 +162,22 @@ export function ProductForm({ supplierId, product }: Props) {
           </div>
 
           <div className="form-field full">
-            <label className="form-label">URL da imagem (deixe vazio para usar picsum)</label>
+            <label className="form-label">Link da foto do produto (opcional)</label>
             <input
               className="form-input"
               value={form.image}
               onChange={set("image")}
-              placeholder="https://exemplo.com/imagem.jpg"
+              placeholder="https://exemplo.com/foto.jpg — deixe vazio para gerar automaticamente"
             />
           </div>
 
           <div className="form-field">
-            <label className="form-label">Keyword (picsum seed)</label>
+            <label className="form-label">Palavra-chave para foto automática</label>
             <input
               className="form-input"
               value={form.keyword}
               onChange={set("keyword")}
-              placeholder="banana"
+              placeholder="ex: banana"
             />
           </div>
 

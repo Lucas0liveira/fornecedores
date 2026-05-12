@@ -84,12 +84,12 @@ export function SupplierForm({ supplier }: Props) {
 
         <div className="form-grid">
           <div className="form-field">
-            <label className="form-label">ID (slug único)</label>
+            <label className="form-label">Código único do fornecedor</label>
             <input
               className="form-input"
               value={form.id}
               onChange={set("id")}
-              placeholder="ex: hortifruti-verde"
+              placeholder="ex: hortifruti-verde (só letras, números e hífen)"
               disabled={isEdit}
               required
             />
@@ -116,7 +116,7 @@ export function SupplierForm({ supplier }: Props) {
           </div>
 
           <div className="form-field full">
-            <label className="form-label">Tagline</label>
+            <label className="form-label">Frase de apresentação</label>
             <input
               className="form-input"
               value={form.tagline}
@@ -126,12 +126,12 @@ export function SupplierForm({ supplier }: Props) {
           </div>
 
           <div className="form-field">
-            <label className="form-label">WhatsApp (só números, com DDI)</label>
+            <label className="form-label">Número do WhatsApp</label>
             <input
               className="form-input"
               value={form.whatsapp}
               onChange={set("whatsapp")}
-              placeholder="5511999999999"
+              placeholder="5511987654321 (código do país + DDD + número)"
               required
             />
           </div>
@@ -157,14 +157,12 @@ export function SupplierForm({ supplier }: Props) {
           </div>
 
           <div className="form-field full">
-            <label className="form-label">
-              Hero image keyword (para picsum.photos)
-            </label>
+            <label className="form-label">Palavra-chave para foto de capa</label>
             <input
               className="form-input"
               value={form.hero}
               onChange={set("hero")}
-              placeholder="vegetables,market"
+              placeholder="ex: frutas, hortifruti, açougue"
             />
           </div>
         </div>
