@@ -1,0 +1,80 @@
+"use client";
+
+import { useState, useMemo } from "react";
+import Link from "next/link";
+import { Search } from "lucide-react";
+import type { Supplier } from "@/lib/types";
+
+function heroUrl(supplier: Pick<Supplier, "id" | "hero">) {
+  return `https://picsum.photos/seed/${encodeURIComponent(supplier.hero)}-${supplier.id}/640/400`;
+}
+
+interface Props {
+  suppliers: Pick<Supplier, "id" | "name" | "tagline" | "category" | "whatsapp" | "hero">[];
+}
+
+export function HomeClient({ suppliers }: Props) {
+  const [q, setQ] = useState("");
+
+  const filtered = useMemo(
+    () =>
+      suppliers.filter(
+        (s) =>
+          !q ||
+          `${s.name} ${s.tagline} ${s.category}`
+            .toLowerCase()
+            .includes(q.toLowerCase())
+      ),
+    [suppliers, q]
+  );
+
+  return (
+    <>
+      <section className="container home-hero">
+        <h1>
+          Escolha um <em>fornecedor</em>
+          <br />e monte seu pedido.
+        </h1>
+        <p className="lede">
+          {suppliers.length} fornecedores parceiros · catálogos atualizados ·
+          pedidos enviados direto pelo WhatsApp.
+        </p>
+        <div className="search-wrap" style={{ marginTop: 22 }}>
+          <Search size={15} color="var(--muted)" />
+          <input
+            placeholder="Buscar fornecedor ou categoria…"
+            value={q}
+            onChange={(e) => setQ(e.target.value)}
+          />
+        </div>
+      </section>
+
+      <section className="container">
+        {filtered.length === 0 ? (
+          <p style={{ color: "var(--muted)", paddingBottom: 60 }}>
+            Nenhum fornecedor encontrado para &ldquo;{q}&rdquo;.
+          </p>
+        ) : (
+          <div className="suppliers-grid">
+            {filtered.map((s) => (
+              <Link key={s.id} href={`/s/${s.id}`} className="supplier-card">
+                <div
+                  className="img"
+                  style={{ backgroundImage: `url(${heroUrl(s)})` }}
+                />
+                <div className="body">
+                  <span className="badge muted">{s.category}</span>
+                  <h3>{s.name}</h3>
+                  <p>{s.tagline}</p>
+                  <div className="meta">
+                    <span>Ver catálogo →</span>
+                  </div>
+                </div>
+              </Link>
+            ))}
+          </div>
+        )}
+      </section>
+    </>
+  );
+}
