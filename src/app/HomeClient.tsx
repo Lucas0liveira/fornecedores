@@ -12,7 +12,6 @@ function heroUrl(supplier: Pick<Supplier, "id" | "hero">) {
 
 interface Props {
   suppliers: Pick<Supplier, "id" | "name" | "tagline" | "category" | "hero">[];
-  siteTitle?: string;
   heroText?: string;
   heroImage?: string;
   heroLayout?: "split" | "centered" | "banner" | "stacked";
@@ -23,7 +22,6 @@ interface Props {
 
 export function HomeClient({
   suppliers,
-  siteTitle,
   heroText,
   heroImage,
   heroLayout = "split",
@@ -107,7 +105,9 @@ export function HomeClient({
                     style={{ backgroundImage: `url(${heroImage})` }}
                   />
                 ) : (
-                  <div className="hero-image" data-placeholder />
+                  <div className="hero-image hero-default-img">
+                    <img src="/bee.png" alt="" />
+                  </div>
                 ))}
             </div>
           </div>

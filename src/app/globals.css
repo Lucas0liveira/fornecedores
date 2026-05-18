@@ -2065,3 +2065,165 @@ textarea.form-input {
 .text-sm { font-size: 13px; }
 .text-xs { font-size: 11px; }
 .font-bold { font-weight: 700; }
+
+/* ── Hero default image (bee logo) ───────────────────────────────── */
+.hero-default-img {
+  background: rgba(255, 253, 243, 0.45);
+  display: grid;
+  place-items: center;
+}
+.hero-default-img img {
+  width: 72%;
+  height: 72%;
+  object-fit: contain;
+  filter: drop-shadow(0 12px 32px rgba(28, 42, 31, 0.16));
+  transform: rotate(-6deg);
+}
+
+/* ════════════════════════════════════════════════════════════════════
+   MOBILE RESPONSIVE
+   ════════════════════════════════════════════════════════════════════ */
+
+/* ── Tighten container padding on small screens ──────────────────── */
+@media (max-width: 480px) {
+  .container { padding-inline: 16px; }
+}
+
+/* ── Header ──────────────────────────────────────────────────────── */
+@media (max-width: 640px) {
+  /* Hide nav links — cart pill is enough to navigate */
+  .app-hd nav { display: none; }
+
+  /* Keep brand compact */
+  .brand-name { font-size: 17px; }
+  .brand-sub  { display: none; }
+
+  /* Brand mark a touch smaller */
+  .brand-mark { width: 34px; height: 34px; font-size: 17px; }
+
+  /* Cart pill: shrink label on very small screens */
+  .cart-pill { padding: 8px 12px; font-size: 13px; }
+}
+
+/* ── Hero card ───────────────────────────────────────────────────── */
+@media (max-width: 800px) {
+  .hero-section { padding: 16px 0 8px; }
+
+  .hero-inner {
+    grid-template-columns: 1fr;
+    padding: 32px 28px 36px;
+    min-height: auto;
+    gap: 20px;
+  }
+
+  /* Default bee image: show as a small centered badge, not the rotated card */
+  .hero-image { display: none; }
+
+  .hero h1 { font-size: clamp(28px, 7vw, 40px); }
+
+  .hero p.lede { font-size: 15px; }
+}
+
+@media (max-width: 480px) {
+  .hero-inner { padding: 24px 20px 28px; }
+
+  .hero-eyebrow {
+    font-size: 9px;
+    letter-spacing: .08em;
+    padding: 5px 10px;
+  }
+
+  /* Stack CTA buttons vertically */
+  .hero-cta { flex-direction: column; align-items: stretch; }
+  .hero-cta .btn { justify-content: center; }
+}
+
+/* ── Feature strip ───────────────────────────────────────────────── */
+@media (max-width: 480px) {
+  .feature-strip { gap: 10px; padding-bottom: 24px; }
+  .feature-strip .feat { padding: 14px 16px; gap: 12px; }
+  .feature-strip .feat .icon { width: 38px; height: 38px; flex-shrink: 0; }
+}
+
+/* ── Section header ──────────────────────────────────────────────── */
+@media (max-width: 600px) {
+  .section-hd { flex-direction: column; align-items: flex-start; gap: 10px; }
+  .section-hd .search-wrap { max-width: 100% !important; width: 100%; }
+}
+
+/* ── Supplier banner ─────────────────────────────────────────────── */
+@media (max-width: 640px) {
+  .supplier-banner { flex-direction: column; align-items: flex-start; padding: 16px 0 20px; }
+  .supplier-banner h1 { font-size: clamp(24px, 6vw, 36px); }
+  .supplier-banner .meta { gap: 10px; }
+  .wa-cta { width: 100%; justify-content: center; }
+}
+
+/* ── Toolbar ─────────────────────────────────────────────────────── */
+@media (max-width: 600px) {
+  .toolbar { padding: 12px; gap: 10px; }
+  .toolbar .search-wrap { min-width: 100%; }
+  .toolbar .right { width: 100%; justify-content: space-between; }
+}
+
+/* ── Cart ────────────────────────────────────────────────────────── */
+@media (max-width: 480px) {
+  /* Collapse to 3-col: thumb | info+stepper | remove */
+  .cart-row {
+    grid-template-columns: 72px 1fr auto;
+    gap: 12px;
+    padding: 14px 16px;
+  }
+  /* Hide separate line-total; price shows in meta row */
+  .cart-row .line-total { display: none; }
+  .cart-row .img { width: 72px; height: 72px; }
+
+  .summary { padding: 16px; }
+  .summary h3 { font-size: 18px; }
+}
+
+/* ── Review ──────────────────────────────────────────────────────── */
+@media (max-width: 480px) {
+  .review-card { padding: 18px 16px; }
+  .review-supplier-row { flex-direction: column; align-items: flex-start; gap: 10px; }
+  .review-table { font-size: 13px; }
+}
+
+/* ── Sent ────────────────────────────────────────────────────────── */
+@media (max-width: 480px) {
+  .sent-page { padding: 60px 16px; }
+  .sent-page h1 { font-size: 28px; }
+}
+
+/* ── Admin sidebar (mobile) ──────────────────────────────────────── */
+@media (max-width: 800px) {
+  .admin-main { padding: 20px 16px 40px; }
+  .admin-side .sidebar-brand .brand-name { font-size: 16px; }
+  .admin-side .sidebar-brand .brand-sub  { display: none; }
+}
+
+/* ── Admin tables ────────────────────────────────────────────────── */
+@media (max-width: 640px) {
+  .admin-table th,
+  .admin-table td { padding: 10px 12px; }
+
+  /* Hide less-critical columns on very small screens */
+  .admin-table .hide-mobile { display: none; }
+}
+
+/* ── Stat grid ───────────────────────────────────────────────────── */
+@media (max-width: 480px) {
+  .stat-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
+  .stat { padding: 16px; }
+  .stat .stat-value { font-size: 30px; }
+}
+
+/* ── Misc ─────────────────────────────────────────────────────────── */
+@media (max-width: 480px) {
+  /* Full-width primary buttons in summary/actions */
+  .summary-actions .btn,
+  .sent-actions .btn { width: 100%; justify-content: center; }
+
+  /* Pagination: smaller buttons */
+  .pagination button { min-width: 32px; padding: 6px 10px; font-size: 12px; }
+}

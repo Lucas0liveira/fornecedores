@@ -19,7 +19,6 @@ export default async function HomePage() {
       <main style={{ flex: 1 }}>
         <HomeClient
           suppliers={suppliers ?? []}
-          siteTitle={config?.site_title}
           heroText={config?.hero_text}
           heroImage={config?.hero_image || undefined}
           contactEmail={config?.contact_email}
