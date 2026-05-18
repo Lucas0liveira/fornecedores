@@ -2,6 +2,8 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { SignOutButton } from "../SignOutButton";
+import { AdminRouteTag } from "./AdminRouteTag";
+import { AdminSidebarNav } from "./AdminSidebarNav";
 
 export default async function ProtectedAdminLayout({
   children,
@@ -22,28 +24,36 @@ export default async function ProtectedAdminLayout({
     .single();
 
   const isTeacher = profile?.role === "teacher";
+  const userName = profile?.name || user.email || "Usuário";
+  const userInitial = userName[0]?.toUpperCase() ?? "U";
+  const userRole = isTeacher ? "Professora" : "Aluno";
 
   return (
     <div className="admin-shell">
-      <header className="admin-topbar">
-        <Link href="/admin" className="brand">
-          <span className="brand-mark" style={{ background: "var(--accent)" }}>
-            A
+      <AdminRouteTag />
+
+      <aside className="admin-side">
+        <Link href="/admin" className="sidebar-brand">
+          <span className="brand-mark">A</span>
+          <span>
+            <span className="brand-name">Arapuá</span>
+            <span className="brand-sub">ADMIN</span>
           </span>
-          <span className="brand-name">Admin <span style={{ opacity: 0.55 }}>· Arapuá</span></span>
         </Link>
-        <nav className="admin-nav">
-          <Link href="/admin/suppliers">Fornecedores</Link>
-          {isTeacher && <Link href="/admin/students">Alunos</Link>}
-          {isTeacher && <Link href="/admin/activity">Atividade</Link>}
-          {isTeacher && <Link href="/admin/settings">Configurações</Link>}
-          <Link href="/" target="_blank">
-            ↗ Site
-          </Link>
-        </nav>
-        <SignOutButton />
-      </header>
-      <div className="admin-body">{children}</div>
+
+        <AdminSidebarNav isTeacher={isTeacher} />
+
+        <div className="sidebar-user">
+          <span className="av">{userInitial}</span>
+          <div>
+            <div style={{ fontWeight: 600, fontSize: 13 }}>{userName}</div>
+            <div className="role">{userRole}</div>
+          </div>
+          <SignOutButton />
+        </div>
+      </aside>
+
+      <main className="admin-main">{children}</main>
     </div>
   );
 }

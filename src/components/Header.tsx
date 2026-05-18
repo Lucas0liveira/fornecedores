@@ -30,7 +30,10 @@ export function Header({ title = "Arapuá Marketplace", logoUrl }: Props) {
               title[0]
             )}
           </span>
-          <span className="brand-name">{title}</span>
+          <span>
+            <span className="brand-name">{title}</span>
+            <span className="brand-sub">MARKETPLACE</span>
+          </span>
         </Link>
 
         <nav>
