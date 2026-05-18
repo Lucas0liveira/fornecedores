@@ -12,13 +12,14 @@ export async function saveSiteConfig(formData: FormData) {
     { key: "site_title",    value: (formData.get("site_title")    as string) || "Arapuá Marketplace" },
     { key: "hero_text",     value: (formData.get("hero_text")     as string) || "" },
     { key: "logo_url",      value: (formData.get("logo_url")      as string) || "" },
-    { key: "primary_color", value: (formData.get("primary_color") as string) || "#15140f" },
-    { key: "accent_color",  value: (formData.get("accent_color")  as string) || "#b4321a" },
-    { key: "bg_type",       value: (formData.get("bg_type")       as string) || "plain" },
-    { key: "bg_color",      value: (formData.get("bg_color")      as string) || "#fafaf7" },
-    { key: "grad_color_1",  value: (formData.get("grad_color_1")  as string) || "#c8e6c9" },
-    { key: "grad_color_2",  value: (formData.get("grad_color_2")  as string) || "#fff9c4" },
+    { key: "primary_color", value: (formData.get("primary_color") as string) || "#2d5f3f" },
+    { key: "accent_color",  value: (formData.get("accent_color")  as string) || "#f5c842" },
+    { key: "bg_type",       value: (formData.get("bg_type")       as string) || "gradient" },
+    { key: "bg_color",      value: (formData.get("bg_color")      as string) || "#fbf7eb" },
+    { key: "grad_color_1",  value: (formData.get("grad_color_1")  as string) || "#fef3c7" },
+    { key: "grad_color_2",  value: (formData.get("grad_color_2")  as string) || "#d4eccf" },
     { key: "show_prices",   value: formData.get("show_prices") === "true" ? "true" : "false" },
+    { key: "contact_email", value: (formData.get("contact_email") as string) || "" },
   ];
 
   for (const row of rows) {

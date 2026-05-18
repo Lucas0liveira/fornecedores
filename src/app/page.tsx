@@ -17,7 +17,7 @@ export default async function HomePage() {
     <>
       <Header title={config?.site_title} logoUrl={config?.logo_url || undefined} />
       <main style={{ flex: 1 }}>
-        <HomeClient suppliers={suppliers ?? []} heroText={config?.hero_text} />
+        <HomeClient suppliers={suppliers ?? []} heroText={config?.hero_text} contactEmail={config?.contact_email} />
       </main>
       <Footer />
     </>

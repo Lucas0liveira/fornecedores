@@ -13,9 +13,10 @@ function heroUrl(supplier: Pick<Supplier, "id" | "hero">) {
 interface Props {
   suppliers: Pick<Supplier, "id" | "name" | "tagline" | "category" | "whatsapp" | "hero">[];
   heroText?: string;
+  contactEmail?: string;
 }
 
-export function HomeClient({ suppliers, heroText }: Props) {
+export function HomeClient({ suppliers, heroText, contactEmail }: Props) {
   const [q, setQ] = useState("");
 
   const filtered = useMemo(
@@ -41,6 +42,13 @@ export function HomeClient({ suppliers, heroText }: Props) {
           {heroText ??
             `${suppliers.length} fornecedores parceiros · catálogos atualizados · pedidos enviados direto pelo WhatsApp.`}
         </p>
+        {contactEmail && (
+          <div className="hero-actions">
+            <a href={`mailto:${contactEmail}`} className="btn btn-ghost">
+              Sou Vendedor →
+            </a>
+          </div>
+        )}
         <div className="search-wrap" style={{ marginTop: 22 }}>
           <Search size={15} color="var(--muted)" />
           <input

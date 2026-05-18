@@ -1,12 +1,18 @@
 import type { Metadata } from "next";
-import { Plus_Jakarta_Sans, JetBrains_Mono } from "next/font/google";
+import { Plus_Jakarta_Sans, Bricolage_Grotesque, JetBrains_Mono } from "next/font/google";
 import { getSiteConfig } from "@/lib/siteConfig";
 import "./globals.css";
 
 const plusJakartaSans = Plus_Jakarta_Sans({
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700", "800"],
+  weight: ["400", "500", "600", "700", "800"],
   variable: "--plus-jakarta-sans",
+});
+
+const bricolageGrotesque = Bricolage_Grotesque({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700", "800"],
+  variable: "--bricolage-grotesque",
 });
 
 const jetbrainsMono = JetBrains_Mono({
@@ -37,23 +43,25 @@ export default async function RootLayout({
         "--bg": config.bg_color,
         "--grad-c1": config.grad_color_1,
         "--grad-c2": config.grad_color_2,
+        "--grad-c3": config.grad_color_1,
+        "--grad-c4": config.grad_color_2,
       }
     : {};
 
   return (
     <html
       lang="pt-BR"
-      className={`${plusJakartaSans.variable} ${jetbrainsMono.variable}`}
+      className={`${plusJakartaSans.variable} ${bricolageGrotesque.variable} ${jetbrainsMono.variable}`}
       style={
         {
           "--font-sans": "var(--plus-jakarta-sans), system-ui, sans-serif",
-          "--font-display": "var(--plus-jakarta-sans), system-ui, sans-serif",
+          "--font-display": "var(--bricolage-grotesque), var(--plus-jakarta-sans), system-ui, sans-serif",
           "--font-mono": "var(--jetbrains-mono), monospace",
           ...colorVars,
         } as unknown as React.CSSProperties
       }
     >
-      <body className={config?.bg_type === "gradient" ? "gradient-bg" : ""}>
+      <body className={config?.bg_type === "plain" ? "solid-bg" : ""}>
         {children}
       </body>
     </html>

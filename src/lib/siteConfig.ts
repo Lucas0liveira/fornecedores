@@ -12,6 +12,7 @@ export type SiteConfig = {
   bg_color: string;
   grad_color_1: string;
   grad_color_2: string;
+  contact_email: string;
 };
 
 const DEFAULTS: SiteConfig = {
@@ -19,12 +20,13 @@ const DEFAULTS: SiteConfig = {
   site_title: "Arapuá Marketplace",
   hero_text: "Explore nossos fornecedores e monte seu pedido.",
   logo_url: "",
-  primary_color: "#15140f",
-  accent_color: "#b4321a",
-  bg_type: "plain",
-  bg_color: "#fafaf7",
-  grad_color_1: "#c8e6c9",
-  grad_color_2: "#fff9c4",
+  primary_color: "#2d5f3f",
+  accent_color: "#f5c842",
+  bg_type: "gradient",
+  bg_color: "#fbf7eb",
+  grad_color_1: "#fef3c7",
+  grad_color_2: "#d4eccf",
+  contact_email: "",
 };
 
 const fetchRows = unstable_cache(
@@ -52,9 +54,10 @@ export async function getSiteConfig(): Promise<SiteConfig> {
     logo_url: m.logo_url ?? "",
     primary_color: m.primary_color || DEFAULTS.primary_color,
     accent_color: m.accent_color || DEFAULTS.accent_color,
-    bg_type: (m.bg_type as "plain" | "gradient") || "plain",
+    bg_type: (m.bg_type as "plain" | "gradient") || DEFAULTS.bg_type,
     bg_color: m.bg_color || DEFAULTS.bg_color,
     grad_color_1: m.grad_color_1 || DEFAULTS.grad_color_1,
     grad_color_2: m.grad_color_2 || DEFAULTS.grad_color_2,
+    contact_email: m.contact_email ?? "",
   };
 }
