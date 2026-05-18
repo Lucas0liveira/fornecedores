@@ -21,6 +21,7 @@ export default async function HomePage() {
           suppliers={suppliers ?? []}
           siteTitle={config?.site_title}
           heroText={config?.hero_text}
+          heroImage={config?.hero_image || undefined}
           contactEmail={config?.contact_email}
         />
       </main>

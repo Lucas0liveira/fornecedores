@@ -15,6 +15,7 @@ export default async function SettingsPage() {
         show_prices: true,
         site_title: "Arapuá Marketplace",
         hero_text: "Explore nossos fornecedores e monte seu pedido.",
+        hero_image: "",
         logo_url: "",
         primary_color: "#2d5f3f",
         accent_color: "#f5c842",

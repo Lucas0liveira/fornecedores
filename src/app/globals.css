@@ -1677,6 +1677,7 @@ body[data-route="admin"] { background: #f6f3e9; }
   border-radius: 12px;
   background: rgba(255, 253, 243, 0.06);
   font-size: 13px;
+  min-width: 0;
 }
 
 .admin-side .sidebar-user .av {

@@ -70,11 +70,7 @@ export function HomeClient({
                 </span>
 
                 <h1>
-                  O marketplace que{" "}
-                  <em>
-                    {siteTitle ? siteTitle.split(" ")[0].toLowerCase() : "conecta"}
-                  </em>{" "}
-                  você a produtos locais
+                  O marketplace que{" "}<em>conecta</em>{" "}você a produtos locais
                 </h1>
 
                 <p className="lede">

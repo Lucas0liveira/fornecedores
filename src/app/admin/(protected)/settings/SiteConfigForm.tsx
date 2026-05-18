@@ -107,6 +107,26 @@ export function SiteConfigForm({ config }: { config: SiteConfig }) {
           </div>
           <div className="form-field full">
             <label className="form-label">
+              Imagem do hero
+              <span style={{ fontWeight: 400, color: "var(--muted)", fontSize: 12, marginLeft: 6 }}>
+                (URL da foto exibida à direita do hero — deixe vazio para mostrar o placeholder)
+              </span>
+            </label>
+            <input
+              className="form-input"
+              name="hero_image"
+              value={form.hero_image}
+              onChange={(e) => set("hero_image", e.target.value)}
+              placeholder="https://exemplo.com/foto-hero.jpg"
+            />
+            {form.hero_image && (
+              <div style={{ marginTop: 8, borderRadius: "var(--radius-sm)", overflow: "hidden", maxWidth: 320, border: "1px solid var(--border)" }}>
+                <img src={form.hero_image} alt="Preview" style={{ width: "100%", height: 120, objectFit: "cover", display: "block" }} />
+              </div>
+            )}
+          </div>
+          <div className="form-field full">
+            <label className="form-label">
               URL do logo
               <span style={{ fontWeight: 400, color: "var(--muted)", fontSize: 12, marginLeft: 6 }}>
                 (deixe vazio para usar a inicial do nome)

@@ -18,17 +18,13 @@ export function Header({ title = "Arapuá Marketplace", logoUrl }: Props) {
         <Link href="/" className="brand">
           <span
             className="brand-mark"
-            style={logoUrl ? { background: "transparent", padding: 0 } : {}}
+            style={{ background: "transparent", padding: 0, boxShadow: "none" }}
           >
-            {logoUrl ? (
-              <img
-                src={logoUrl}
-                alt=""
-                style={{ width: 32, height: 32, objectFit: "contain" }}
-              />
-            ) : (
-              title[0]
-            )}
+            <img
+              src={logoUrl || "/bee.png"}
+              alt=""
+              style={{ width: 38, height: 38, objectFit: "contain" }}
+            />
           </span>
           <span>
             <span className="brand-name">{title}</span>

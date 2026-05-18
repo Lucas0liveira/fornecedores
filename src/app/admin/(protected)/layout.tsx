@@ -45,8 +45,10 @@ export default async function ProtectedAdminLayout({
 
         <div className="sidebar-user">
           <span className="av">{userInitial}</span>
-          <div>
-            <div style={{ fontWeight: 600, fontSize: 13 }}>{userName}</div>
+          <div style={{ flex: 1, minWidth: 0, overflow: "hidden" }}>
+            <div style={{ fontWeight: 600, fontSize: 13, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+              {userName}
+            </div>
             <div className="role">{userRole}</div>
           </div>
           <SignOutButton />

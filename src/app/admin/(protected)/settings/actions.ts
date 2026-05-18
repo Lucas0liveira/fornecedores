@@ -11,6 +11,7 @@ export async function saveSiteConfig(formData: FormData) {
   const rows = [
     { key: "site_title",    value: (formData.get("site_title")    as string) || "Arapuá Marketplace" },
     { key: "hero_text",     value: (formData.get("hero_text")     as string) || "" },
+    { key: "hero_image",    value: (formData.get("hero_image")    as string) || "" },
     { key: "logo_url",      value: (formData.get("logo_url")      as string) || "" },
     { key: "primary_color", value: (formData.get("primary_color") as string) || "#2d5f3f" },
     { key: "accent_color",  value: (formData.get("accent_color")  as string) || "#f5c842" },

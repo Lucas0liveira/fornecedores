@@ -5,6 +5,7 @@ export type SiteConfig = {
   show_prices: boolean;
   site_title: string;
   hero_text: string;
+  hero_image: string;
   logo_url: string;
   primary_color: string;
   accent_color: string;
@@ -19,6 +20,7 @@ const DEFAULTS: SiteConfig = {
   show_prices: true,
   site_title: "Arapuá Marketplace",
   hero_text: "Explore nossos fornecedores e monte seu pedido.",
+  hero_image: "",
   logo_url: "",
   primary_color: "#2d5f3f",
   accent_color: "#f5c842",
@@ -51,6 +53,7 @@ export async function getSiteConfig(): Promise<SiteConfig> {
     show_prices: (m.show_prices ?? "true") !== "false",
     site_title: m.site_title || DEFAULTS.site_title,
     hero_text: m.hero_text || DEFAULTS.hero_text,
+    hero_image: m.hero_image ?? "",
     logo_url: m.logo_url ?? "",
     primary_color: m.primary_color || DEFAULTS.primary_color,
     accent_color: m.accent_color || DEFAULTS.accent_color,
