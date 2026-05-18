@@ -4,15 +4,33 @@ import Link from "next/link";
 import { ShoppingCart } from "lucide-react";
 import { useCart } from "@/store/cart";
 
-export function Header() {
+interface Props {
+  title?: string;
+  logoUrl?: string;
+}
+
+export function Header({ title = "Arapuá Marketplace", logoUrl }: Props) {
   const count = useCart((s) => s.count());
 
   return (
     <header className="app-hd">
       <div className="container app-hd-row">
         <Link href="/" className="brand">
-          <span className="brand-mark">L</span>
-          <span>Loja Logística</span>
+          <span
+            className="brand-mark"
+            style={logoUrl ? { background: "transparent", padding: 0 } : {}}
+          >
+            {logoUrl ? (
+              <img
+                src={logoUrl}
+                alt=""
+                style={{ width: 28, height: 28, objectFit: "contain" }}
+              />
+            ) : (
+              title[0]
+            )}
+          </span>
+          <span>{title}</span>
         </Link>
 
         <nav>

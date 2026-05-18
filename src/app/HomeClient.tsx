@@ -6,14 +6,16 @@ import { Search } from "lucide-react";
 import type { Supplier } from "@/lib/types";
 
 function heroUrl(supplier: Pick<Supplier, "id" | "hero">) {
-  return `https://picsum.photos/seed/${encodeURIComponent(supplier.hero)}-${supplier.id}/640/400`;
+  if (supplier.hero?.startsWith("http")) return supplier.hero;
+  return `https://picsum.photos/seed/${encodeURIComponent(supplier.hero || supplier.id)}-${supplier.id}/640/400`;
 }
 
 interface Props {
   suppliers: Pick<Supplier, "id" | "name" | "tagline" | "category" | "whatsapp" | "hero">[];
+  heroText?: string;
 }
 
-export function HomeClient({ suppliers }: Props) {
+export function HomeClient({ suppliers, heroText }: Props) {
   const [q, setQ] = useState("");
 
   const filtered = useMemo(
@@ -36,8 +38,8 @@ export function HomeClient({ suppliers }: Props) {
           <br />e monte seu pedido.
         </h1>
         <p className="lede">
-          {suppliers.length} fornecedores parceiros · catálogos atualizados ·
-          pedidos enviados direto pelo WhatsApp.
+          {heroText ??
+            `${suppliers.length} fornecedores parceiros · catálogos atualizados · pedidos enviados direto pelo WhatsApp.`}
         </p>
         <div className="search-wrap" style={{ marginTop: 22 }}>
           <Search size={15} color="var(--muted)" />

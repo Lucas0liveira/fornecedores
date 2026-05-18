@@ -28,14 +28,15 @@ export default async function ProtectedAdminLayout({
       <header className="admin-topbar">
         <Link href="/admin" className="brand">
           <span className="brand-mark" style={{ background: "var(--accent)" }}>
-            L
+            A
           </span>
-          <span>Admin · Loja Logística</span>
+          <span>Admin · Arapuá</span>
         </Link>
         <nav className="admin-nav">
           <Link href="/admin/suppliers">Fornecedores</Link>
           {isTeacher && <Link href="/admin/students">Alunos</Link>}
           {isTeacher && <Link href="/admin/activity">Atividade</Link>}
+          {isTeacher && <Link href="/admin/settings">Configurações</Link>}
           <Link href="/" target="_blank">
             ↗ Site
           </Link>

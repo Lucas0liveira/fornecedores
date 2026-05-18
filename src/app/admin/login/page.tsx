@@ -33,8 +33,8 @@ export default function LoginPage() {
     <div className="login-page">
       <div className="login-box">
         <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 20 }}>
-          <span className="brand-mark" style={{ background: "var(--primary)", color: "var(--on-primary)", width: 28, height: 28, display: "inline-flex", alignItems: "center", justifyContent: "center", fontFamily: "var(--font-display)", fontSize: 15 }}>L</span>
-          <span style={{ fontFamily: "var(--font-display)", fontSize: 16 }}>Loja Logística</span>
+          <span className="brand-mark" style={{ background: "var(--primary)", color: "var(--on-primary)", width: 28, height: 28, display: "inline-flex", alignItems: "center", justifyContent: "center", fontFamily: "var(--font-display)", fontSize: 15 }}>A</span>
+          <span style={{ fontFamily: "var(--font-display)", fontSize: 16 }}>Arapuá Marketplace</span>
         </div>
         <h1>Acesso administrativo</h1>
         <p className="sub">Área restrita ao professor.</p>

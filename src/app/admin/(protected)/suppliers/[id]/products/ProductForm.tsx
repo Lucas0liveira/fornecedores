@@ -17,6 +17,7 @@ export function ProductForm({ supplierId, product }: Props) {
   const isEdit = !!product;
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [saved, setSaved] = useState(false);
 
   const [form, setForm] = useState({
     name: product?.name ?? "",
@@ -85,8 +86,11 @@ export function ProductForm({ supplierId, product }: Props) {
     }
 
     setLoading(false);
-    router.push(`/admin/suppliers/${supplierId}/products`);
-    router.refresh();
+    setSaved(true);
+    setTimeout(() => {
+      router.push(`/admin/suppliers/${supplierId}/products`);
+      router.refresh();
+    }, 1200);
   };
 
   return (
@@ -95,6 +99,11 @@ export function ProductForm({ supplierId, product }: Props) {
         {error && (
           <div className="alert-error" style={{ marginBottom: 18 }}>
             {error}
+          </div>
+        )}
+        {saved && (
+          <div className="alert-success" style={{ marginBottom: 18 }}>
+            ✓ Salvo com sucesso!
           </div>
         )}
 

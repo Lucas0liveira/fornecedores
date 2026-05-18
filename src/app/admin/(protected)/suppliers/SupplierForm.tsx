@@ -29,6 +29,7 @@ export function SupplierForm({ supplier }: Props) {
   const isEdit = !!supplier;
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [saved, setSaved] = useState(false);
 
   const [form, setForm] = useState({
     id: supplier?.id ?? "",
@@ -86,14 +87,18 @@ export function SupplierForm({ supplier }: Props) {
     }
 
     setLoading(false);
-    router.push("/admin/suppliers");
-    router.refresh();
+    setSaved(true);
+    setTimeout(() => {
+      router.push("/admin/suppliers");
+      router.refresh();
+    }, 1200);
   };
 
   return (
     <form onSubmit={handleSubmit}>
       <div className="form-card">
         {error && <div className="alert-error" style={{ marginBottom: 18 }}>{error}</div>}
+        {saved && <div className="alert-success" style={{ marginBottom: 18 }}>✓ Salvo com sucesso!</div>}
 
         <div className="form-grid">
           <div className="form-field">

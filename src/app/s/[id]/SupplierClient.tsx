@@ -2,7 +2,7 @@
 
 import { useState, useMemo } from "react";
 import Link from "next/link";
-import { Search, ChevronLeft, ChevronRight } from "lucide-react";
+import { Search, ChevronLeft, ChevronRight, ShoppingCart } from "lucide-react";
 import { useCart } from "@/store/cart";
 import type { Supplier, Product } from "@/lib/types";
 
@@ -27,9 +27,10 @@ function productImage(p: Product) {
 interface Props {
   supplier: Supplier;
   products: Product[];
+  showPrices?: boolean;
 }
 
-export function SupplierClient({ supplier, products }: Props) {
+export function SupplierClient({ supplier, products, showPrices = true }: Props) {
   const [q, setQ] = useState("");
   const [sort, setSort] = useState("name-asc");
   const [stockOnly, setStockOnly] = useState(false);
@@ -134,8 +135,8 @@ export function SupplierClient({ supplier, products }: Props) {
           >
             <option value="name-asc">Nome (A → Z)</option>
             <option value="name-desc">Nome (Z → A)</option>
-            <option value="price-asc">Menor preço</option>
-            <option value="price-desc">Maior preço</option>
+            {showPrices && <option value="price-asc">Menor preço</option>}
+            {showPrices && <option value="price-desc">Maior preço</option>}
           </select>
         </div>
       </div>
@@ -157,6 +158,9 @@ export function SupplierClient({ supplier, products }: Props) {
             product={p}
             inCartQty={items[p.id]?.qty ?? 0}
             onAdd={handleAddProduct}
+            showPrices={showPrices}
+            supplierWhatsapp={supplier.whatsapp}
+            supplierName={supplier.name}
           />
         ))}
       </div>
@@ -194,23 +198,43 @@ function ProductCard({
   product,
   inCartQty,
   onAdd,
+  showPrices,
+  supplierWhatsapp,
+  supplierName,
 }: {
   product: Product;
   inCartQty: number;
   onAdd: (p: Product, qty: number) => void;
+  showPrices: boolean;
+  supplierWhatsapp: string;
+  supplierName: string;
 }) {
   const [qty, setQty] = useState(product.min_order || 1);
   const imgUrl = productImage(product);
 
+  const waUrl = useMemo(() => {
+    const orderId = String(Date.now()).slice(-6);
+    const today = new Date().toLocaleDateString("pt-BR");
+    const lines = [
+      `*Pedido #${orderId} — ${today}*`,
+      `*Fornecedor:* ${supplierName}`,
+      "",
+      `*Produto:* ${product.name} (${product.brand})`,
+      `*Qtd:* ${qty} ${product.unit}`,
+    ];
+    if (showPrices) {
+      lines.push(
+        `*Preço:* ${fmt(product.price)}/${product.unit} → Total: ${fmt(qty * product.price)}`
+      );
+    }
+    lines.push("", "_Pedido via Arapuá Marketplace — atividade escolar._");
+    return `https://wa.me/${supplierWhatsapp}?text=${encodeURIComponent(lines.join("\n"))}`;
+  }, [qty, product, showPrices, supplierWhatsapp, supplierName]);
+
   return (
     <article className="prod-card">
-      <div
-        className="img"
-        style={{ backgroundImage: `url(${imgUrl})` }}
-      >
-        {!product.in_stock && (
-          <div className="stock-out">Sem estoque</div>
-        )}
+      <div className="img" style={{ backgroundImage: `url(${imgUrl})` }}>
+        {!product.in_stock && <div className="stock-out">Sem estoque</div>}
       </div>
       <div className="body">
         <div>
@@ -218,20 +242,20 @@ function ProductCard({
           <h4>{product.name}</h4>
           <p className="desc">{product.description}</p>
         </div>
-        <div className="price-row">
-          <div>
-            <div className="price">{fmt(product.price)}</div>
-            <div className="unit-label">por {product.unit}</div>
+        {showPrices && (
+          <div className="price-row">
+            <div>
+              <div className="price">{fmt(product.price)}</div>
+              <div className="unit-label">por {product.unit}</div>
+            </div>
+            <div className="min-order">
+              mín. {product.min_order} {product.unit}
+            </div>
           </div>
-          <div className="min-order">
-            mín. {product.min_order} {product.unit}
-          </div>
-        </div>
+        )}
         <div className="actions">
           <div className="stepper">
-            <button onClick={() => setQty((q) => Math.max(1, q - 1))}>
-              −
-            </button>
+            <button onClick={() => setQty((q) => Math.max(1, q - 1))}>−</button>
             <input
               type="number"
               value={qty}
@@ -241,13 +265,50 @@ function ProductCard({
             <button onClick={() => setQty((q) => q + 1)}>+</button>
           </div>
           <button
-            className="btn btn-primary"
-            style={{ flex: 1, justifyContent: "center", fontSize: 12 }}
+            className="btn btn-ghost btn-sm"
+            title={inCartQty > 0 ? `No carrinho: ${inCartQty}` : "Adicionar ao carrinho"}
+            style={{ padding: "5px 9px", position: "relative", flexShrink: 0 }}
             disabled={!product.in_stock}
             onClick={() => onAdd(product, qty)}
           >
-            {inCartQty > 0 ? `Adicionar (${inCartQty})` : "Adicionar"}
+            <ShoppingCart size={15} />
+            {inCartQty > 0 && (
+              <span
+                style={{
+                  position: "absolute",
+                  top: -5,
+                  right: -5,
+                  background: "var(--primary)",
+                  color: "var(--on-primary)",
+                  borderRadius: "999px",
+                  fontSize: 9,
+                  fontWeight: 700,
+                  width: 15,
+                  height: 15,
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                {inCartQty}
+              </span>
+            )}
           </button>
+          <a
+            href={waUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn btn-primary"
+            style={{
+              flex: 1,
+              justifyContent: "center",
+              fontSize: 12,
+              opacity: product.in_stock ? 1 : 0.45,
+              pointerEvents: product.in_stock ? "auto" : "none",
+            }}
+          >
+            Pedir →
+          </a>
         </div>
       </div>
     </article>
