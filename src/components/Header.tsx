@@ -24,13 +24,13 @@ export function Header({ title = "Arapuá Marketplace", logoUrl }: Props) {
               <img
                 src={logoUrl}
                 alt=""
-                style={{ width: 28, height: 28, objectFit: "contain" }}
+                style={{ width: 32, height: 32, objectFit: "contain" }}
               />
             ) : (
               title[0]
             )}
           </span>
-          <span>{title}</span>
+          <span className="brand-name">{title}</span>
         </Link>
 
         <nav>

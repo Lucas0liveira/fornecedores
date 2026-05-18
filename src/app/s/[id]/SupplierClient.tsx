@@ -2,7 +2,7 @@
 
 import { useState, useMemo } from "react";
 import Link from "next/link";
-import { Search, ChevronLeft, ChevronRight, ShoppingCart } from "lucide-react";
+import { Search, ChevronLeft, ChevronRight } from "lucide-react";
 import { useCart } from "@/store/cart";
 import type { Supplier, Product } from "@/lib/types";
 
@@ -94,13 +94,15 @@ export function SupplierClient({ supplier, products, showPrices = true }: Props)
       </div>
 
       <div className="supplier-banner">
-        <span className="badge">{supplier.category}</span>
-        <h1>{supplier.name}</h1>
-        <p className="tag">{supplier.tagline}</p>
-        <div className="meta">
-          <span>{supplier.address}</span>
-          <span>CNPJ {supplier.cnpj}</span>
-          <span>WhatsApp +{supplier.whatsapp}</span>
+        <div>
+          <span className="badge">{supplier.category}</span>
+          <h1>{supplier.name}</h1>
+          <p className="tag">{supplier.tagline}</p>
+          <div className="meta">
+            <span>{supplier.address}</span>
+            <span>CNPJ {supplier.cnpj}</span>
+            <span>WhatsApp +{supplier.whatsapp}</span>
+          </div>
         </div>
       </div>
 
@@ -254,60 +256,37 @@ function ProductCard({
           </div>
         )}
         <div className="actions">
-          <div className="stepper">
-            <button onClick={() => setQty((q) => Math.max(1, q - 1))}>−</button>
-            <input
-              type="number"
-              value={qty}
-              min={1}
-              onChange={(e) => setQty(Math.max(1, Number(e.target.value) || 1))}
-            />
-            <button onClick={() => setQty((q) => q + 1)}>+</button>
+          <div className="add-row">
+            <div className="stepper">
+              <button onClick={() => setQty((q) => Math.max(1, q - 1))}>−</button>
+              <input
+                type="number"
+                value={qty}
+                min={1}
+                onChange={(e) => setQty(Math.max(1, Number(e.target.value) || 1))}
+              />
+              <button onClick={() => setQty((q) => q + 1)}>+</button>
+            </div>
+            <button
+              className="btn btn-primary"
+              disabled={!product.in_stock}
+              onClick={() => onAdd(product, qty)}
+              style={{ position: "relative" }}
+            >
+              {inCartQty > 0 ? `Adicionar (${inCartQty})` : "Adicionar"}
+            </button>
           </div>
-          <button
-            className="btn btn-ghost btn-sm"
-            title={inCartQty > 0 ? `No carrinho: ${inCartQty}` : "Adicionar ao carrinho"}
-            style={{ padding: "5px 9px", position: "relative", flexShrink: 0 }}
-            disabled={!product.in_stock}
-            onClick={() => onAdd(product, qty)}
-          >
-            <ShoppingCart size={15} />
-            {inCartQty > 0 && (
-              <span
-                style={{
-                  position: "absolute",
-                  top: -5,
-                  right: -5,
-                  background: "var(--primary)",
-                  color: "var(--on-primary)",
-                  borderRadius: "999px",
-                  fontSize: 9,
-                  fontWeight: 700,
-                  width: 15,
-                  height: 15,
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                }}
-              >
-                {inCartQty}
-              </span>
-            )}
-          </button>
           <a
             href={waUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="btn btn-primary"
+            className="wa-link"
             style={{
-              flex: 1,
-              justifyContent: "center",
-              fontSize: 12,
               opacity: product.in_stock ? 1 : 0.45,
               pointerEvents: product.in_stock ? "auto" : "none",
             }}
           >
-            Pedir →
+            Pedir via WhatsApp
           </a>
         </div>
       </div>

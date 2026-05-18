@@ -79,11 +79,9 @@ export default function CartPage() {
             <div className="cart-supplier-hd">
               <span className="dot" />
               <div>
-                <b>{supplier?.name ?? supplierId}</b>
+                <div className="supplier-name">{supplier?.name ?? supplierId}</div>
                 {supplier && (
-                  <div style={{ fontSize: 12, color: "var(--muted)", fontFamily: "var(--font-mono)" }}>
-                    WhatsApp +{supplier.whatsapp}
-                  </div>
+                  <div className="supplier-sub">WhatsApp +{supplier.whatsapp}</div>
                 )}
               </div>
             </div>

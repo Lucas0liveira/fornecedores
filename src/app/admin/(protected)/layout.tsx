@@ -30,7 +30,7 @@ export default async function ProtectedAdminLayout({
           <span className="brand-mark" style={{ background: "var(--accent)" }}>
             A
           </span>
-          <span>Admin · Arapuá</span>
+          <span className="brand-name">Admin <span style={{ opacity: 0.55 }}>· Arapuá</span></span>
         </Link>
         <nav className="admin-nav">
           <Link href="/admin/suppliers">Fornecedores</Link>
