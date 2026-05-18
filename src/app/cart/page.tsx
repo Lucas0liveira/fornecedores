@@ -31,6 +31,7 @@ export default function CartPage() {
   const router = useRouter();
   const { supplierId, items, setQty, remove, clear } = useCart();
   const [supplier, setSupplier] = useState<Supplier | null>(null);
+  const [showPrices, setShowPrices] = useState(true);
 
   const cartItems = Object.values(items);
   const totalQty = cartItems.reduce((s, it) => s + it.qty, 0);
@@ -39,12 +40,10 @@ export default function CartPage() {
   useEffect(() => {
     if (!supplierId) return;
     const supabase = createClient();
-    supabase
-      .from("suppliers")
-      .select("*")
-      .eq("id", supplierId)
-      .single()
+    supabase.from("suppliers").select("*").eq("id", supplierId).single()
       .then(({ data }) => setSupplier(data));
+    supabase.from("site_config").select("value").eq("key", "show_prices").single()
+      .then(({ data }) => { if (data) setShowPrices(data.value !== "false"); });
   }, [supplierId]);
 
   if (cartItems.length === 0) {
@@ -101,9 +100,11 @@ export default function CartPage() {
                   <div className="name">{product.name}</div>
                   <div className="meta">
                     <span>{product.brand}</span>
-                    <span>
-                      {fmt(product.price)} / {product.unit}
-                    </span>
+                    {showPrices && (
+                      <span>
+                        {fmt(product.price)} / {product.unit}
+                      </span>
+                    )}
                   </div>
                 </div>
                 <div className="stepper">
@@ -119,7 +120,9 @@ export default function CartPage() {
                   <button onClick={() => setQty(product.id, qty + 1)}>+</button>
                 </div>
                 <div style={{ textAlign: "right" }}>
-                  <div className="line-total">{fmt(qty * product.price)}</div>
+                  {showPrices && (
+                    <div className="line-total">{fmt(qty * product.price)}</div>
+                  )}
                   <button
                     className="remove-btn"
                     onClick={() => remove(product.id)}
@@ -143,14 +146,18 @@ export default function CartPage() {
               <span>Quantidade total</span>
               <span>{totalQty}</span>
             </div>
-            <div className="summary-line">
-              <span>Subtotal</span>
-              <span>{fmt(subtotal)}</span>
-            </div>
-            <div className="summary-line total">
-              <span>Total</span>
-              <span>{fmt(subtotal)}</span>
-            </div>
+            {showPrices && (
+              <>
+                <div className="summary-line">
+                  <span>Subtotal</span>
+                  <span>{fmt(subtotal)}</span>
+                </div>
+                <div className="summary-line total">
+                  <span>Total</span>
+                  <span>{fmt(subtotal)}</span>
+                </div>
+              </>
+            )}
             <div className="summary-actions">
               <button
                 className="btn btn-primary btn-lg"

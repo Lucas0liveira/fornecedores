@@ -16,7 +16,8 @@ const fmt = (n: number) =>
 function buildMessage(
   supplier: Supplier,
   items: { product: { name: string; brand: string; unit: string; price: number }; qty: number }[],
-  subtotal: number
+  subtotal: number,
+  showPrices: boolean
 ) {
   const today = new Date().toLocaleDateString("pt-BR");
   const orderId = String(Date.now()).slice(-6);
@@ -31,19 +32,25 @@ function buildMessage(
   lines.push("");
   lines.push("*── ITENS ──*");
   items.forEach(({ product, qty }, i) => {
-    const lineTotal = qty * product.price;
     lines.push(`${String(i + 1).padStart(2, "0")}. ${product.name} (${product.brand})`);
-    lines.push(`    ${qty} ${product.unit} × ${fmt(product.price)} = ${fmt(lineTotal)}`);
+    if (showPrices) {
+      const lineTotal = qty * product.price;
+      lines.push(`    ${qty} ${product.unit} × ${fmt(product.price)} = ${fmt(lineTotal)}`);
+    } else {
+      lines.push(`    ${qty} ${product.unit}`);
+    }
   });
   lines.push("");
   lines.push("*── TOTAIS ──*");
   lines.push(
     `Itens: ${items.length}  ·  Qtd total: ${items.reduce((s, it) => s + it.qty, 0)}`
   );
-  lines.push(`Subtotal: ${fmt(subtotal)}`);
-  lines.push(`*TOTAL: ${fmt(subtotal)}*`);
+  if (showPrices) {
+    lines.push(`Subtotal: ${fmt(subtotal)}`);
+    lines.push(`*TOTAL: ${fmt(subtotal)}*`);
+  }
   lines.push("");
-  lines.push("_Pedido enviado pelo Simulador de Logística — atividade escolar._");
+  lines.push("_Pedido enviado pelo Arapuá Marketplace — atividade escolar._");
   return lines.join("\n");
 }
 
@@ -51,6 +58,7 @@ export default function ReviewPage() {
   const router = useRouter();
   const { supplierId, items, clear } = useCart();
   const [supplier, setSupplier] = useState<Supplier | null>(null);
+  const [showPrices, setShowPrices] = useState(true);
 
   const cartItems = Object.values(items);
   const subtotal = cartItems.reduce((s, it) => s + it.qty * it.product.price, 0);
@@ -61,18 +69,16 @@ export default function ReviewPage() {
       return;
     }
     const supabase = createClient();
-    supabase
-      .from("suppliers")
-      .select("*")
-      .eq("id", supplierId)
-      .single()
+    supabase.from("suppliers").select("*").eq("id", supplierId).single()
       .then(({ data }) => setSupplier(data));
+    supabase.from("site_config").select("value").eq("key", "show_prices").single()
+      .then(({ data }) => { if (data) setShowPrices(data.value !== "false"); });
   }, [supplierId]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const message = useMemo(() => {
     if (!supplier) return "";
-    return buildMessage(supplier, cartItems, subtotal);
-  }, [supplier, items, subtotal]); // eslint-disable-line react-hooks/exhaustive-deps
+    return buildMessage(supplier, cartItems, subtotal, showPrices);
+  }, [supplier, items, subtotal, showPrices]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const handleSend = () => {
     if (!supplier) return;
@@ -161,26 +167,28 @@ export default function ReviewPage() {
                     WhatsApp +{supplier.whatsapp}
                   </div>
                 </div>
-                <div style={{ textAlign: "right" }}>
-                  <div
-                    style={{
-                      color: "var(--muted)",
-                      fontSize: 11,
-                      fontFamily: "var(--font-mono)",
-                    }}
-                  >
-                    TOTAL
+                {showPrices && (
+                  <div style={{ textAlign: "right" }}>
+                    <div
+                      style={{
+                        color: "var(--muted)",
+                        fontSize: 11,
+                        fontFamily: "var(--font-mono)",
+                      }}
+                    >
+                      TOTAL
+                    </div>
+                    <div
+                      style={{
+                        fontFamily: "var(--font-display)",
+                        fontSize: 28,
+                        fontWeight: 800,
+                      }}
+                    >
+                      {fmt(subtotal)}
+                    </div>
                   </div>
-                  <div
-                    style={{
-                      fontFamily: "var(--font-display)",
-                      fontSize: 28,
-                      fontWeight: 800,
-                    }}
-                  >
-                    {fmt(subtotal)}
-                  </div>
-                </div>
+                )}
               </div>
 
               <table className="review-table">
@@ -188,8 +196,8 @@ export default function ReviewPage() {
                   <tr>
                     <th>Produto</th>
                     <th>Qtd</th>
-                    <th>Unitário</th>
-                    <th>Total</th>
+                    {showPrices && <th>Unitário</th>}
+                    {showPrices && <th>Total</th>}
                   </tr>
                 </thead>
                 <tbody>
@@ -210,10 +218,8 @@ export default function ReviewPage() {
                       <td>
                         {qty} {product.unit}
                       </td>
-                      <td>{fmt(product.price)}</td>
-                      <td style={{ fontWeight: 600 }}>
-                        {fmt(qty * product.price)}
-                      </td>
+                      {showPrices && <td>{fmt(product.price)}</td>}
+                      {showPrices && <td style={{ fontWeight: 600 }}>{fmt(qty * product.price)}</td>}
                     </tr>
                   ))}
                 </tbody>
